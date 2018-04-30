@@ -10,6 +10,9 @@ public class BodySourceView : MonoBehaviour
     
     private Dictionary<ulong, GameObject> _Bodies = new Dictionary<ulong, GameObject>();
     private BodySourceManager _BodyManager;
+
+    //RZ
+    public GameObject KinectModel;
     
     private Dictionary<Kinect.JointType, Kinect.JointType> _BoneMap = new Dictionary<Kinect.JointType, Kinect.JointType>()
     {
@@ -118,9 +121,9 @@ public class BodySourceView : MonoBehaviour
             LineRenderer lr = jointObj.AddComponent<LineRenderer>();
             lr.SetVertexCount(2);
             lr.material = BoneMaterial;
-            lr.SetWidth(0.05f, 0.05f);
+            lr.SetWidth(0.015f, 0.015f);
             
-            jointObj.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+            jointObj.transform.localScale = new Vector3(0.03f, 0.03f, 0.03f);
             jointObj.name = jt.ToString();
             jointObj.transform.parent = body.transform;
         }
@@ -174,6 +177,7 @@ public class BodySourceView : MonoBehaviour
     
     private static Vector3 GetVector3FromJoint(Kinect.Joint joint)
     {
-        return new Vector3(joint.Position.X * 10, joint.Position.Y * 10, joint.Position.Z * 10);
+        //return new Vector3(joint.Position.X * 10, joint.Position.Y * 10, joint.Position.Z * 10);
+        return new Vector3(joint.Position.X * 1, joint.Position.Y * 1, joint.Position.Z * 1);
     }
 }
