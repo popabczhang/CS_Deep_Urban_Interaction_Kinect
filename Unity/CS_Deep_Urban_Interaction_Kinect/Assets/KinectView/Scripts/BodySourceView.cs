@@ -144,13 +144,15 @@ public class BodySourceView : MonoBehaviour
             }
             
             Transform jointObj = bodyObject.transform.Find(jt.ToString());
-            jointObj.localPosition = GetVector3FromJoint(sourceJoint);
-            
+            //jointObj.localPosition = GetVector3FromJoint(sourceJoint);
+            jointObj.localPosition = KinectModel.transform.TransformPoint(GetVector3FromJoint(sourceJoint));
+
             LineRenderer lr = jointObj.GetComponent<LineRenderer>();
             if(targetJoint.HasValue)
             {
                 lr.SetPosition(0, jointObj.localPosition);
-                lr.SetPosition(1, GetVector3FromJoint(targetJoint.Value));
+                //lr.SetPosition(1, GetVector3FromJoint(targetJoint.Value));
+                lr.SetPosition(1, KinectModel.transform.TransformPoint(GetVector3FromJoint(targetJoint.Value)));
                 lr.SetColors(GetColorForState (sourceJoint.TrackingState), GetColorForState(targetJoint.Value.TrackingState));
             }
             else
@@ -178,6 +180,6 @@ public class BodySourceView : MonoBehaviour
     private static Vector3 GetVector3FromJoint(Kinect.Joint joint)
     {
         //return new Vector3(joint.Position.X * 10, joint.Position.Y * 10, joint.Position.Z * 10);
-        return new Vector3(joint.Position.X * 1, joint.Position.Y * 1, joint.Position.Z * 1);
+        return new Vector3(- joint.Position.X * 1, joint.Position.Y * 1, joint.Position.Z * 1);
     }
 }
